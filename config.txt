@@ -1,0 +1,11 @@
+# Arquivo de configuracao da simulacao de hidrometro
+# A primeira linha define a vazao inicial em litros por minuto (LPM)
+# As linhas seguintes definem uma nova vazao a partir de um tempo especifico
+# Formato: tempo_em_segundos=nova_vazao_lpm
+
+vazao_l_min=100
+
+# Eventos na simulacao
+5=80     # Aos 5 segundos, a vazao cai para 80 LPM
+15=0     # Aos 15 segundos, a vazao cai para 0 LPM (falta de agua)
+25=120   # Aos 25 segundos, a vazao sobe para 120 LPM

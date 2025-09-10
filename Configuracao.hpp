@@ -1,8 +1,8 @@
 #ifndef CONFIGURACAO_HPP
 #define CONFIGURACAO_HPP
 
-#include <string>
 #include <unordered_map>
+#include <string>
 
 class Configuracao
 {
@@ -12,7 +12,7 @@ class Configuracao
         std::string getBitola() const;
 
     private:
-        std::unordered_map<std::string, std::string> parametros;
+        std::unordered_map <std::string, std::string> parametros;
 };
 
 #endif
