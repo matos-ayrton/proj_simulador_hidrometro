@@ -1,12 +1,12 @@
 #ifndef HIDROMETRO_HPP
 #define HIDROMETRO_HPP
-
 #include <string>
+#include <thread>
 #include "Configuracao.hpp"
 #include "Display.hpp"
 #include "Relogio.hpp"
 
-class Hidrometro 
+class Hidrometro
 {
 public:
     Hidrometro(const std::string& arquivo_config);
@@ -16,6 +16,7 @@ private:
     Configuracao configuracao;
     Display display;
     Relogio relogio;
+    void gerenciarEntradaUsuario();
 };
 
-#endif // HIDROMETRO_HPP
+#endif

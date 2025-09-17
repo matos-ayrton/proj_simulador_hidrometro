@@ -1,16 +1,20 @@
 #ifndef DISPLAY_HPP
 #define DISPLAY_HPP
-
+#include "CImg.h"
+#include <string>
+using namespace cimg_library;
 class Display
 {
-    public:
-        Display();
-        void adicionarVolume(double litros);
-        void mostrarVolume() const;
-        double getVolumeTotalLitros() const;
-    
-    private:
-        double volume_total_litros;
+public:
+    Display();
+    ~Display();
+    void adicionarVolume(double litros);
+    void mostrarVolume();
+    double getVolumeTotalLitros() const;
+private:
+    CImg<unsigned char> imagem_hidrometro_base;
+    CImgDisplay janela_display;
+    double volume_total_litros;
+    void atualizarDisplayGrafico();
 };
-
 #endif
