@@ -116,3 +116,7 @@ void Display::atualizarDisplayGrafico() {
     // Exibe a imagem atualizada na janela
     janela_display.display(imagem_atualizada);
 }
+
+void Display::setTitulo(const std::string& titulo) {
+    janela_display.set_title(titulo.c_str());
+}

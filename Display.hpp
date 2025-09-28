@@ -11,6 +11,9 @@ public:
     void adicionarVolume(double litros);
     void mostrarVolume();
     double getVolumeTotalLitros() const;
+
+    void setTitulo(const std::string& titulo);
+    
 private:
     CImg<unsigned char> imagem_hidrometro_base;
     CImgDisplay janela_display;

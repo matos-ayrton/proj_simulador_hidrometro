@@ -1,0 +1,29 @@
+@"
+# binários/objetos
+*.exe
+*.o
+*.obj
+*.pdb
+*.ilk
+*.dll
+*.lib
+*.a
+*.log
+
+# VS Code
+.vscode/
+
+# saídas/artefatos (ajuste se quiser versionar)
+output/
+out/
+*.bmp
+*.png
+*.jpg
+
+# configs/comandos locais
+config_*.txt
+commands_*.txt
+
+# pasta de build opcional
+colab/build/
+"@ | Out-File -Encoding utf8 .gitignore
