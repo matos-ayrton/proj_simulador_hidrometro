@@ -4,11 +4,7 @@
 #include <filesystem>
 #include "SimuladorManager.hpp"
 
-// Uso esperado (exemplos):
-//   a) .\simulador_mt.exe 3   -> usa configs config_1.txt..config_3.txt e cmds commands_1.txt..commands_3.txt
-//   b) .\simulador_mt.exe     -> padrão: 2 simuladores
-//
-// Duração/intervalo: ajuste nas constantes abaixo.
+
 int main(int argc, char** argv) {
     int n = 2;
     if (argc >= 2) n = std::max(1, std::min(5, std::atoi(argv[1])));
@@ -20,8 +16,8 @@ int main(int argc, char** argv) {
     cfgs.reserve(n); cmds.reserve(n);
 
     for (int i = 1; i <= n; ++i) {
-        // Para cada simulador, permita config específica.
-        // Se não existir, cai no "config.txt" do proprietário (comportamento herdado).
+        // pra cada simulador, permite config específica
+        // se não existir, cai no "config.txt" do proprietário (comportamento herdado).
         std::string cfg = "config_" + std::to_string(i) + ".txt";
         if (!std::filesystem::exists(cfg)) cfg = "config.txt";
 

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <sstream>
 
+
 Display::Display() : volume_total_litros(0.0) {
     try {
         // Tenta carregar a imagem base do hidrômetro
@@ -35,35 +36,37 @@ double Display::getVolumeTotalLitros() const {
 
 void Display::atualizarDisplayGrafico() {
     // Cria uma cópia da imagem original para não desenhar sobre os números antigos
+    using namespace cimg_library;
+
     CImg<unsigned char> imagem_atualizada = imagem_hidrometro_base;
-   
-    const unsigned char preto[] = {0, 0, 0};
+
+    const unsigned char preto[]    = {0, 0, 0};
     const unsigned char vermelho[] = {255, 0, 0};
-    
+
     // Calcula os valores
     long long metros_cubicos = floor(volume_total_litros / 1000);
-    double decimais_litros = fmod(volume_total_litros, 1000);
-    
+    double decimais_litros   = fmod(volume_total_litros, 1000);
+
     // Extrai cada dígito individualmente
     int centenas_litros = static_cast<int>(decimais_litros / 100) % 10;
-    int dezenas_litros = static_cast<int>(decimais_litros / 10) % 10;
-    int litros_unidade = static_cast<int>(decimais_litros) % 10;
-    int decimos_litro = static_cast<int>(decimais_litros * 10) % 10;
-    
+    int dezenas_litros  = static_cast<int>(decimais_litros / 10) % 10;
+    int litros_unidade  = static_cast<int>(decimais_litros) % 10;
+    int decimos_litro   = static_cast<int>(decimais_litros * 10) % 10;
+
     // Extrai os 4 dígitos dos metros cúbicos (com padding de zeros)
     int m3_milhares = (metros_cubicos / 1000) % 10;
-    int m3_centenas = (metros_cubicos / 100) % 10;
-    int m3_dezenas = (metros_cubicos / 10) % 10;
-    int m3_unidades = metros_cubicos % 10;
-    
+    int m3_centenas = (metros_cubicos / 100)  % 10;
+    int m3_dezenas  = (metros_cubicos / 10)   % 10;
+    int m3_unidades =  metros_cubicos % 10;
+
     // Define as posições para cada dígito (ajuste conforme sua imagem)
     int tamanho_fonte = 25;
-    int espacamento = 30; // Espaçamento entre dígitos
-    
+    int espacamento   = 30; // Espaçamento entre dígitos
+
     // Posições base para metros cúbicos (preto)
     int x_base_m3 = 450;
     int y_m3 = 345;
-    
+
     // Desenha os 4 dígitos dos metros cúbicos individualmente
     imagem_atualizada.draw_text(
         x_base_m3, y_m3, std::to_string(m3_milhares).c_str(), 
@@ -81,11 +84,11 @@ void Display::atualizarDisplayGrafico() {
         x_base_m3 + (espacamento*3) + 20, y_m3, std::to_string(m3_unidades).c_str(), 
         preto, 0, 1.0f, tamanho_fonte
     );
-    
+
     // Posições para centenas e dezenas de litros (vermelho)
     int x_base_litros_cd = 595;
     int y_litros_cd = 345;
-    
+
     imagem_atualizada.draw_text(
         x_base_litros_cd, y_litros_cd, std::to_string(centenas_litros).c_str(), 
         vermelho, 0, 1.0f, tamanho_fonte
@@ -94,11 +97,11 @@ void Display::atualizarDisplayGrafico() {
         x_base_litros_cd + espacamento + 5, y_litros_cd, std::to_string(dezenas_litros).c_str(), 
         vermelho, 0, 1.0f, tamanho_fonte
     );
-    
+
     // Posição para unidade de litros (vermelho)
     int x_litros_unidade = 660;
     int y_litros_unidade = 500;
-    
+
     imagem_atualizada.draw_text(
         x_litros_unidade, y_litros_unidade, std::to_string(litros_unidade).c_str(), 
         preto, 0, 1.0f, tamanho_fonte
@@ -112,11 +115,29 @@ void Display::atualizarDisplayGrafico() {
         x_decimos, y_decimos, std::to_string(decimos_litro).c_str(), 
         preto, 0, 1.0f, tamanho_fonte
     );
-    
-    // Exibe a imagem atualizada na janela
-    janela_display.display(imagem_atualizada);
+
+    if (ui_scale != 1.0) {
+        const int nw = (int)std::lround(imagem_atualizada.width()  * ui_scale);
+        const int nh = (int)std::lround(imagem_atualizada.height() * ui_scale);
+        CImg<unsigned char> scaled = imagem_atualizada.get_resize(nw, nh, -100, -100, 5); 
+        janela_display.resize(nw, nh);
+        janela_display.display(scaled);
+    } else {
+        janela_display.resize(imagem_atualizada.width(), imagem_atualizada.height());
+        janela_display.display(imagem_atualizada);
+    }
 }
 
 void Display::setTitulo(const std::string& titulo) {
     janela_display.set_title(titulo.c_str());
+}
+
+void Display::setScale(double s) {
+    if (s < 0.1) s = 0.1;
+    if (s > 2.0) s = 2.0;
+    ui_scale = s;
+}
+
+void Display::setPosition(int x, int y) {
+    janela_display.move(x, y);
 }

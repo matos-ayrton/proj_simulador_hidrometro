@@ -6,10 +6,8 @@
 #include <filesystem>
 #include "HidrometroMT.hpp"
 
-// Administra até 5 simuladores, cada um em sua própria thread.
 class SimuladorManager {
 public:
-    // Recebe vetores de tamanhos iguais (até 5): configs e command-files
     void startAll(
         const std::vector<std::string>& cfgs,
         const std::vector<std::string>& cmdFiles,
