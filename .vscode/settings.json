@@ -44,6 +44,26 @@
         "iomanip": "cpp",
         "chrono": "cpp",
         "ratio": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "bit": "cpp",
+        "charconv": "cpp",
+        "codecvt": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "condition_variable": "cpp",
+        "csignal": "cpp",
+        "cstring": "cpp",
+        "optional": "cpp",
+        "string_view": "cpp",
+        "format": "cpp",
+        "mutex": "cpp",
+        "numbers": "cpp",
+        "queue": "cpp",
+        "ranges": "cpp",
+        "semaphore": "cpp",
+        "span": "cpp",
+        "stop_token": "cpp",
+        "text_encoding": "cpp",
+        "variant": "cpp"
     }
 }
